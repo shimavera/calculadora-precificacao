@@ -17,7 +17,7 @@ const DEFAULT_INPUTS: CalculatorInputs = {
   taxRegimeId: "simples-1",
   shippingCost: 18,
   freeShipping: true,
-  packagingCost: 4,
+  packagingCost: 3.5,
   marketingPercent: 5,
   returnRate: 2,
   desiredMargin: 25,
