@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 const DEFAULT_INPUTS: CalculatorInputs = {
-  productCost: 125,
+  productCost: 75,
   quantity: 1,
   marketplaceId: "mercadolivre-premium",
   customMarketplaceFee: 15,

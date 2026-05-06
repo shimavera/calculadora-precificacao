@@ -1,11 +1,11 @@
 import { Product, Marketplace, TaxRegime } from "./types";
 
 export const PRODUCTS: Product[] = [
-  { id: "vestido-luna", name: "Vestido Luna", category: "Manga Longa", cost: 125.0 },
-  { id: "vestido-lara", name: "Vestido Lara", category: "Manga Curta", cost: 120.0 },
-  { id: "body-ml", name: "Body", category: "Manga Longa", cost: 69.9 },
-  { id: "body-mc", name: "Body", category: "Manga Curta", cost: 59.9 },
-  { id: "calca-jeans", name: "Calça Jeans", category: "Denim", cost: 150.0 },
+  { id: "vestido-luna", name: "Vestido Luna", category: "Manga Longa", cost: 75.0 },
+  { id: "vestido-lara", name: "Vestido Lara", category: "Manga Curta", cost: 70.0 },
+  { id: "body-ml", name: "Body", category: "Manga Longa", cost: 40.0 },
+  { id: "body-mc", name: "Body", category: "Manga Curta", cost: 35.0 },
+  { id: "calca-jeans", name: "Calça Jeans", category: "Denim", cost: 75.0 },
 ];
 
 export const MARKETPLACES: Marketplace[] = [
