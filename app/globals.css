@@ -16,9 +16,6 @@
   --text-3: #5E5874;
   --green: #3ECFA3;
   --red: #E05858;
-  --font-display: var(--font-cormorant);
-  --font-body: var(--font-dm-sans);
-  --font-mono: var(--font-dm-mono);
 }
 
 *, *::before, *::after { box-sizing: border-box; padding: 0; margin: 0; }
@@ -28,7 +25,7 @@ html { scroll-behavior: smooth; }
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: var(--font-body), 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-sans), 'Inter', system-ui, sans-serif;
   font-size: 14px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -40,16 +37,24 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 2px; }
 
 /* Font utilities */
-.f-display { font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif; }
-.f-mono    { font-family: var(--font-mono), 'DM Mono', 'Courier New', monospace; }
+/* f-serif: Instrument Serif — logo, tagline */
+.f-serif  { font-family: var(--font-serif), 'Georgia', serif; }
+/* f-price: Space Grotesk — o número grande do preço */
+.f-price  { font-family: var(--font-display), 'Space Grotesk', system-ui, sans-serif; }
+/* f-num: tabular numerals em Inter — KPIs e breakdown */
+.f-num    {
+  font-family: var(--font-sans), 'Inter', system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
 
-/* Inputs */
+/* Inputs — Inter, nunca monospace */
 .field {
   background: var(--surface-2);
   border: 1.5px solid var(--border-strong);
   border-radius: 10px;
   color: var(--text);
-  font-family: var(--font-mono), monospace;
+  font-family: var(--font-sans), 'Inter', system-ui, sans-serif;
   font-size: 14px;
   padding: 11px 14px;
   width: 100%;

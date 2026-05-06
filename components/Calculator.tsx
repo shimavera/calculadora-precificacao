@@ -101,8 +101,8 @@ function CostRow({
           <span style={{ fontSize: 12, color: "var(--text-2)" }}>{label}</span>
         </div>
         <div style={{ display: "flex", gap: 14, alignItems: "baseline" }}>
-          <span className="f-mono" style={{ fontSize: 10, color: "var(--text-3)" }}>{percent.toFixed(1)}%</span>
-          <span className="f-mono" style={{ fontSize: 13, color: "var(--text)", minWidth: 78, textAlign: "right" }}>
+          <span className="f-num" style={{ fontSize: 10, color: "var(--text-3)" }}>{percent.toFixed(1)}%</span>
+          <span className="f-num" style={{ fontSize: 13, color: "var(--text)", minWidth: 78, textAlign: "right" }}>
             {formatCurrency(value)}
           </span>
         </div>
@@ -126,8 +126,8 @@ function KPI({ label, value, sub, color }: { label: string; value: string; sub?:
       background: "var(--surface-2)", border: "1px solid var(--border)",
       borderRadius: 10, padding: "14px 16px",
     }}>
-      <div className="f-mono" style={{ fontSize: 20, fontWeight: 500, color: color ?? "var(--text)", lineHeight: 1.1 }}>{value}</div>
-      {sub && <div className="f-mono" style={{ fontSize: 10, color: "var(--text-3)", marginTop: 3 }}>{sub}</div>}
+      <div className="f-num" style={{ fontSize: 20, fontWeight: 500, color: color ?? "var(--text)", lineHeight: 1.1 }}>{value}</div>
+      {sub && <div className="f-num" style={{ fontSize: 10, color: "var(--text-3)", marginTop: 3 }}>{sub}</div>}
       <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 6, letterSpacing: "0.03em" }}>{label}</div>
     </div>
   );
@@ -167,7 +167,7 @@ export default function Calculator() {
         height: 60,
       }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-          <span className="f-display" style={{ fontSize: 24, fontWeight: 700, letterSpacing: "-0.01em", color: "var(--text)" }}>
+          <span className="f-serif" style={{ fontSize: 26, fontStyle: "italic", fontWeight: 400, letterSpacing: "-0.01em", color: "var(--text)" }}>
             Precify
           </span>
           <span style={{
@@ -222,7 +222,7 @@ export default function Calculator() {
                       {p.name}
                     </span>
                     <span style={{ fontSize: 11, color: "var(--text-3)" }}>{p.category}</span>
-                    <span className="f-mono" style={{ fontSize: 12, color: active ? "var(--gold)" : "var(--text-2)", marginTop: 2 }}>
+                    <span className="f-num" style={{ fontSize: 12, color: active ? "var(--gold)" : "var(--text-2)", marginTop: 2 }}>
                       {formatCurrency(p.cost)}
                     </span>
                   </button>
@@ -345,7 +345,7 @@ export default function Calculator() {
                 style={{ accentColor: "var(--gold)" }} />
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5 }}>
                 {["0%", "10%", "20%", "30%"].map((v) => (
-                  <span key={v} className="f-mono" style={{ fontSize: 10, color: "var(--text-3)" }}>{v}</span>
+                  <span key={v} className="f-num" style={{ fontSize: 10, color: "var(--text-3)" }}>{v}</span>
                 ))}
               </div>
             </Field>
@@ -357,7 +357,7 @@ export default function Calculator() {
                 style={{ accentColor: "var(--gold)" }} />
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5 }}>
                 {["0%", "5%", "10%", "20%"].map((v) => (
-                  <span key={v} className="f-mono" style={{ fontSize: 10, color: "var(--text-3)" }}>{v}</span>
+                  <span key={v} className="f-num" style={{ fontSize: 10, color: "var(--text-3)" }}>{v}</span>
                 ))}
               </div>
             </Field>
@@ -367,10 +367,10 @@ export default function Calculator() {
           <section>
             <SectionHead icon={<TrendingUp size={15} />} label="Margem de Lucro Desejada" />
             <div style={{ textAlign: "center", marginBottom: 20, padding: "20px 0" }}>
-              <span className="f-display" style={{ fontSize: 72, fontWeight: 700, color: "var(--gold-light)", lineHeight: 1, letterSpacing: "-0.02em" }}>
+              <span className="f-price" style={{ fontSize: 72, fontWeight: 700, color: "var(--gold-light)", lineHeight: 1, letterSpacing: "-0.03em" }}>
                 {inputs.desiredMargin}
               </span>
-              <span style={{ fontSize: 28, color: "var(--text-3)", fontWeight: 300, marginLeft: 4 }}>%</span>
+              <span className="f-price" style={{ fontSize: 28, color: "var(--text-3)", fontWeight: 400, marginLeft: 4 }}>%</span>
               <p style={{ fontSize: 12, color: "var(--text-3)", marginTop: 10 }}>
                 {inputs.desiredMargin < 15 ? "⚠ Margem baixa — risco operacional" : inputs.desiredMargin < 25 ? "Margem razoável" : "Margem saudável"}
               </p>
@@ -380,7 +380,7 @@ export default function Calculator() {
               style={{ accentColor: "var(--gold)" }} />
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5 }}>
               {["5%", "20%", "40%", "60%"].map((v) => (
-                <span key={v} className="f-mono" style={{ fontSize: 10, color: "var(--text-3)" }}>{v}</span>
+                <span key={v} className="f-num" style={{ fontSize: 10, color: "var(--text-3)" }}>{v}</span>
               ))}
             </div>
           </section>
@@ -399,9 +399,10 @@ export default function Calculator() {
               <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: 12 }}>
                 Preço Recomendado
               </p>
-              <div key={result.recommendedPrice.toFixed(0)} className="f-display fade-up" style={{
-                fontSize: 52, fontWeight: 700, color: "var(--gold-light)",
-                letterSpacing: "-0.02em", lineHeight: 1,
+              <div key={result.recommendedPrice.toFixed(0)} className="f-price fade-up" style={{
+                fontSize: 54, fontWeight: 700, color: "var(--gold-light)",
+                letterSpacing: "-0.03em", lineHeight: 1,
+                fontVariantNumeric: "tabular-nums",
               }}>
                 {formatCurrency(result.recommendedPrice)}
               </div>
@@ -411,7 +412,7 @@ export default function Calculator() {
                   background: "var(--surface-2)", border: "1px solid var(--border)",
                   color: "var(--text-3)",
                 }}>
-                  Mínimo: <span className="f-mono" style={{ color: "var(--text-2)" }}>{formatCurrency(result.breakEvenPrice)}</span>
+                  Mínimo: <span className="f-num" style={{ color: "var(--text-2)" }}>{formatCurrency(result.breakEvenPrice)}</span>
                 </span>
               </div>
             </div>
@@ -498,7 +499,7 @@ export default function Calculator() {
                 </div>
                 <p style={{ fontSize: 13, color: "var(--text-2)", lineHeight: 1.7 }}>{card.text}</p>
                 {card.formula && (
-                  <pre className="f-mono" style={{
+                  <pre className="f-num" style={{
                     marginTop: 12, padding: "10px 12px", borderRadius: 8,
                     background: "var(--surface-2)", fontSize: 12,
                     color: "var(--gold)", lineHeight: 1.7, whiteSpace: "pre-wrap",
@@ -522,7 +523,7 @@ export default function Calculator() {
         <p style={{ fontSize: 11, color: "var(--text-3)" }}>
           Valores estimados. Consulte seu contador para decisões tributárias.
         </p>
-        <span className="f-display" style={{ fontSize: 13, color: "var(--text-3)", fontStyle: "italic" }}>
+        <span className="f-serif" style={{ fontSize: 14, color: "var(--text-3)", fontStyle: "italic" }}>
           Precify
         </span>
       </footer>
