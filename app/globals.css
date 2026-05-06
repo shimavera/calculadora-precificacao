@@ -139,3 +139,114 @@ input[type='checkbox']:checked::after {
   to   { transform: scaleX(1); }
 }
 .fade-up { animation: fadeUp 0.35s ease both; }
+
+/* ── Responsive layout classes ── */
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.calc-left {
+  padding: 32px 28px 64px 0;
+  border-right: 1px solid var(--border);
+}
+
+.calc-right {
+  padding: 32px 0 64px 28px;
+}
+
+.results-sticky {
+  position: sticky;
+  top: 76px;
+}
+
+.header-inner {
+  padding: 0 32px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edu-section {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 14px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 800px) {
+  .calc-grid {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+    gap: 0;
+  }
+
+  .calc-right {
+    order: -1;
+    padding: 20px 0 0 0;
+    border-left: none;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+  }
+
+  .calc-left {
+    padding: 24px 0 48px 0;
+    border-right: none;
+  }
+
+  .results-sticky {
+    position: static;
+  }
+
+  .header-inner {
+    padding: 0 16px;
+    height: 52px;
+  }
+
+  .edu-section {
+    padding: 0 16px;
+  }
+
+  .footer-inner {
+    padding: 12px 16px;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  /* Preço menor no mobile */
+  .price-hero-value {
+    font-size: 40px !important;
+  }
+
+  /* Pills de produto: 2 colunas no mobile */
+  .product-pills {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* KPIs: 3 colunas ficam pequenas — manter mas reduzir padding */
+  .kpi-grid {
+    gap: 6px !important;
+  }
+
+  /* Margem número grande */
+  .margin-display {
+    font-size: 56px !important;
+  }
+}

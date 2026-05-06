@@ -161,49 +161,40 @@ export default function Calculator() {
       <header style={{
         position: "sticky", top: 0, zIndex: 40,
         borderBottom: "1px solid var(--border)",
-        background: "rgba(14,12,18,0.88)", backdropFilter: "blur(20px)",
-        padding: "0 32px",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        height: 60,
+        background: "rgba(14,12,18,0.92)", backdropFilter: "blur(20px)",
       }}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-          <span className="f-serif" style={{ fontSize: 26, fontStyle: "italic", fontWeight: 400, letterSpacing: "-0.01em", color: "var(--text)" }}>
-            Precify
-          </span>
-          <span style={{
-            fontSize: 10, fontWeight: 700, letterSpacing: "0.12em",
-            textTransform: "uppercase", color: "var(--gold)",
-            background: "var(--gold-dim)", padding: "2px 7px", borderRadius: 20,
-          }}>
-            Moda
-          </span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <HealthIcon size={13} style={{ color: healthColor }} />
-          <span style={{ fontSize: 12, color: healthColor, fontWeight: 500 }}>
-            {result.actualMargin >= 20 ? "Margem saudável" : result.actualMargin >= 10 ? "Atenção à margem" : "Margem crítica"}
-          </span>
+        <div className="header-inner">
+          <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
+            <span className="f-serif" style={{ fontSize: 26, fontStyle: "italic", fontWeight: 400, letterSpacing: "-0.01em", color: "var(--text)" }}>
+              Precify
+            </span>
+            <span style={{
+              fontSize: 10, fontWeight: 700, letterSpacing: "0.12em",
+              textTransform: "uppercase", color: "var(--gold)",
+              background: "var(--gold-dim)", padding: "2px 7px", borderRadius: 20,
+            }}>
+              Moda
+            </span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <HealthIcon size={13} style={{ color: healthColor }} />
+            <span style={{ fontSize: 12, color: healthColor, fontWeight: 500 }}>
+              {result.actualMargin >= 20 ? "Margem saudável" : result.actualMargin >= 10 ? "Atenção à margem" : "Margem crítica"}
+            </span>
+          </div>
         </div>
       </header>
 
       {/* ── Body ── */}
-      <div style={{
-        flex: 1, display: "grid",
-        gridTemplateColumns: "1fr 380px",
-        maxWidth: 1100, width: "100%",
-        margin: "0 auto", padding: "0 24px",
-        gap: 0,
-      }}>
+      <div className="calc-grid" style={{ flex: 1 }}>
 
         {/* LEFT — Inputs */}
-        <div style={{ padding: "32px 28px 64px 0", borderRight: "1px solid var(--border)" }}>
+        <div className="calc-left">
 
           {/* Produtos */}
           <section style={{ marginBottom: 36 }}>
             <SectionHead icon={<ShoppingBag size={15} />} label="Produto" />
-
-            {/* Pills */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 18 }}>
+            <div className="product-pills" style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 18 }}>
               {PRODUCTS.map((p) => {
                 const active = selectedProduct === p.id;
                 return (
@@ -232,14 +223,9 @@ export default function Calculator() {
 
             <Field label="Custo do produto" tooltip="Quanto você paga pelo produto — preço de compra ou custo de produção.">
               <div style={{ position: "relative" }}>
-                <span style={{
-                  position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)",
-                  color: "var(--text-3)", fontSize: 13, fontFamily: "var(--font-mono), monospace", pointerEvents: "none",
-                }}>R$</span>
+                <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "var(--text-3)", fontSize: 13, pointerEvents: "none" }}>R$</span>
                 <input
-                  type="number"
-                  className="field"
-                  style={{ paddingLeft: 34 }}
+                  type="number" className="field" style={{ paddingLeft: 34 }}
                   value={inputs.productCost}
                   onChange={(e) => { setSelectedProduct("custom"); set("productCost", parseFloat(e.target.value) || 0); }}
                   step="0.01" min="0"
@@ -280,9 +266,7 @@ export default function Calculator() {
             <Field label="Regime tributário" tooltip="Cada regime tem alíquotas diferentes. Consulte seu contador.">
               <select className="field" value={inputs.taxRegimeId} onChange={(e) => set("taxRegimeId", e.target.value)}>
                 {TAX_REGIMES.map((t) => (
-                  <option key={t.id} value={t.id}>
-                    {t.name} — {t.rate}%
-                  </option>
+                  <option key={t.id} value={t.id}>{t.name} — {t.rate}%</option>
                 ))}
               </select>
             </Field>
@@ -299,14 +283,11 @@ export default function Calculator() {
           {/* Logística */}
           <section style={{ marginBottom: 36 }}>
             <SectionHead icon={<Truck size={15} />} label="Logística" />
-
-            {/* Checkbox frete grátis */}
             <label style={{
               display: "flex", alignItems: "flex-start", gap: 12, cursor: "pointer",
               padding: "12px 14px", borderRadius: 10,
-              background: "var(--surface-2)", border: "1.5px solid var(--border-strong)",
+              background: "var(--surface-2)", border: `1.5px solid ${inputs.freeShipping ? "rgba(200,160,74,0.35)" : "var(--border-strong)"}`,
               marginBottom: 14, transition: "border-color 0.18s",
-              ...(inputs.freeShipping ? { borderColor: "rgba(200,160,74,0.35)" } : {}),
             }}>
               <input type="checkbox" checked={inputs.freeShipping} onChange={(e) => set("freeShipping", e.target.checked)} style={{ marginTop: 1 }} />
               <div>
@@ -314,20 +295,18 @@ export default function Calculator() {
                 <div style={{ fontSize: 12, color: "var(--text-3)" }}>Você absorve o custo do envio no preço de venda</div>
               </div>
             </label>
-
             {inputs.freeShipping && (
               <Field label="Custo médio do envio" tooltip="Valor que você paga para despachar uma peça. Será embutido no preço.">
                 <div style={{ position: "relative" }}>
-                  <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "var(--text-3)", fontSize: 13, fontFamily: "var(--font-mono),monospace", pointerEvents: "none" }}>R$</span>
+                  <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "var(--text-3)", fontSize: 13, pointerEvents: "none" }}>R$</span>
                   <input type="number" className="field" style={{ paddingLeft: 34 }} value={inputs.shippingCost}
                     onChange={(e) => set("shippingCost", parseFloat(e.target.value) || 0)} step="0.5" min="0" />
                 </div>
               </Field>
             )}
-
             <Field label="Custo de embalagem" tooltip="Caixa, papel de seda, sacola, fita. Não esqueça esses detalhes!">
               <div style={{ position: "relative" }}>
-                <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "var(--text-3)", fontSize: 13, fontFamily: "var(--font-mono),monospace", pointerEvents: "none" }}>R$</span>
+                <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "var(--text-3)", fontSize: 13, pointerEvents: "none" }}>R$</span>
                 <input type="number" className="field" style={{ paddingLeft: 34 }} value={inputs.packagingCost}
                   onChange={(e) => set("packagingCost", parseFloat(e.target.value) || 0)} step="0.5" min="0" />
               </div>
@@ -337,7 +316,6 @@ export default function Calculator() {
           {/* Marketing & Perdas */}
           <section style={{ marginBottom: 36 }}>
             <SectionHead icon={<Megaphone size={15} />} label="Marketing & Perdas" />
-
             <Field label={`Anúncios e marketing — ${inputs.marketingPercent}%`}
               tooltip="Percentual do preço de venda destinado a anúncios patrocinados ou mídia paga.">
               <input type="range" min="0" max="30" step="0.5" value={inputs.marketingPercent}
@@ -345,11 +323,10 @@ export default function Calculator() {
                 style={{ accentColor: "var(--gold)" }} />
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5 }}>
                 {["0%", "10%", "20%", "30%"].map((v) => (
-                  <span key={v} className="f-num" style={{ fontSize: 10, color: "var(--text-3)" }}>{v}</span>
+                  <span key={v} style={{ fontSize: 10, color: "var(--text-3)" }}>{v}</span>
                 ))}
               </div>
             </Field>
-
             <Field label={`Taxa de devolução — ${inputs.returnRate}%`}
               tooltip="Moda online tem 5-15% de devolução em média. Cada retorno custa o frete de ida e volta.">
               <input type="range" min="0" max="20" step="0.5" value={inputs.returnRate}
@@ -357,7 +334,7 @@ export default function Calculator() {
                 style={{ accentColor: "var(--gold)" }} />
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5 }}>
                 {["0%", "5%", "10%", "20%"].map((v) => (
-                  <span key={v} className="f-num" style={{ fontSize: 10, color: "var(--text-3)" }}>{v}</span>
+                  <span key={v} style={{ fontSize: 10, color: "var(--text-3)" }}>{v}</span>
                 ))}
               </div>
             </Field>
@@ -367,7 +344,7 @@ export default function Calculator() {
           <section>
             <SectionHead icon={<TrendingUp size={15} />} label="Margem de Lucro Desejada" />
             <div style={{ textAlign: "center", marginBottom: 20, padding: "20px 0" }}>
-              <span className="f-price" style={{ fontSize: 72, fontWeight: 700, color: "var(--gold-light)", lineHeight: 1, letterSpacing: "-0.03em" }}>
+              <span className="f-price margin-display" style={{ fontSize: 72, fontWeight: 700, color: "var(--gold-light)", lineHeight: 1, letterSpacing: "-0.03em" }}>
                 {inputs.desiredMargin}
               </span>
               <span className="f-price" style={{ fontSize: 28, color: "var(--text-3)", fontWeight: 400, marginLeft: 4 }}>%</span>
@@ -380,15 +357,15 @@ export default function Calculator() {
               style={{ accentColor: "var(--gold)" }} />
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5 }}>
               {["5%", "20%", "40%", "60%"].map((v) => (
-                <span key={v} className="f-num" style={{ fontSize: 10, color: "var(--text-3)" }}>{v}</span>
+                <span key={v} style={{ fontSize: 10, color: "var(--text-3)" }}>{v}</span>
               ))}
             </div>
           </section>
         </div>
 
-        {/* RIGHT — Results (sticky) */}
-        <div style={{ padding: "32px 0 64px 28px" }}>
-          <div style={{ position: "sticky", top: 76 }}>
+        {/* RIGHT — Results */}
+        <div className="calc-right">
+          <div className="results-sticky">
 
             {/* Price hero */}
             <div style={{
@@ -399,18 +376,16 @@ export default function Calculator() {
               <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: 12 }}>
                 Preço Recomendado
               </p>
-              <div key={result.recommendedPrice.toFixed(0)} className="f-price fade-up" style={{
+              <div key={result.recommendedPrice.toFixed(0)} className="f-price price-hero-value fade-up" style={{
                 fontSize: 54, fontWeight: 700, color: "var(--gold-light)",
-                letterSpacing: "-0.03em", lineHeight: 1,
-                fontVariantNumeric: "tabular-nums",
+                letterSpacing: "-0.03em", lineHeight: 1, fontVariantNumeric: "tabular-nums",
               }}>
                 {formatCurrency(result.recommendedPrice)}
               </div>
-              <div style={{ marginTop: 14, display: "flex", justifyContent: "center", gap: 8 }}>
+              <div style={{ marginTop: 14, display: "flex", justifyContent: "center" }}>
                 <span style={{
                   fontSize: 11, padding: "4px 10px", borderRadius: 20,
-                  background: "var(--surface-2)", border: "1px solid var(--border)",
-                  color: "var(--text-3)",
+                  background: "var(--surface-2)", border: "1px solid var(--border)", color: "var(--text-3)",
                 }}>
                   Mínimo: <span className="f-num" style={{ color: "var(--text-2)" }}>{formatCurrency(result.breakEvenPrice)}</span>
                 </span>
@@ -418,7 +393,7 @@ export default function Calculator() {
             </div>
 
             {/* KPIs */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 12 }}>
+            <div className="kpi-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 12 }}>
               <KPI label="Lucro / venda" value={formatCurrency(result.netProfit)} color={result.netProfit > 0 ? "var(--green)" : "var(--red)"} />
               <KPI label="Margem real" value={formatPercent(result.actualMargin)} color={healthColor} />
               <KPI label="Múltiplo" value={`${result.markup.toFixed(1)}×`} />
@@ -428,39 +403,35 @@ export default function Calculator() {
             {result.actualMargin < 10 && (
               <div style={{
                 display: "flex", gap: 10, padding: "12px 14px", borderRadius: 10,
-                background: "rgba(224,88,88,0.08)", border: "1px solid rgba(224,88,88,0.2)",
-                marginBottom: 12,
+                background: "rgba(224,88,88,0.08)", border: "1px solid rgba(224,88,88,0.2)", marginBottom: 12,
               }}>
                 <AlertTriangle size={14} style={{ color: "var(--red)", flexShrink: 0, marginTop: 1 }} />
                 <p style={{ fontSize: 12, color: "var(--red)", lineHeight: 1.5 }}>
-                  Margem abaixo de 10%. Ajuste o preço ou reduza custos para garantir a sustentabilidade.
+                  Margem abaixo de 10%. Ajuste o preço ou reduza custos.
                 </p>
               </div>
             )}
 
             {/* Breakdown */}
-            <div style={{
-              background: "var(--surface)", border: "1px solid var(--border)",
-              borderRadius: 14, padding: "20px 20px 14px",
-            }}>
+            <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 14, padding: "20px 20px 14px" }}>
               <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: 16 }}>
                 Anatomia do Preço
               </p>
-              <CostRow label="Custo do produto"  value={result.costs.productCost}     percent={result.costs.productCostPercent}     color={COST_COLORS.productCost} />
-              <CostRow label="Taxa marketplace"  value={result.costs.marketplaceFee}   percent={result.costs.marketplaceFeePercent}   color={COST_COLORS.marketplaceFee} />
-              <CostRow label="Impostos"           value={result.costs.tax}              percent={result.costs.taxPercent}              color={COST_COLORS.tax} />
+              <CostRow label="Custo do produto" value={result.costs.productCost}   percent={result.costs.productCostPercent}   color={COST_COLORS.productCost} />
+              <CostRow label="Taxa marketplace" value={result.costs.marketplaceFee} percent={result.costs.marketplaceFeePercent} color={COST_COLORS.marketplaceFee} />
+              <CostRow label="Impostos"          value={result.costs.tax}            percent={result.costs.taxPercent}            color={COST_COLORS.tax} />
               {inputs.freeShipping && (
-                <CostRow label="Frete"            value={result.costs.shipping}         percent={result.costs.shippingPercent}         color={COST_COLORS.shipping} />
+                <CostRow label="Frete"           value={result.costs.shipping}       percent={result.costs.shippingPercent}       color={COST_COLORS.shipping} />
               )}
-              <CostRow label="Embalagem"          value={result.costs.packaging}        percent={result.costs.packagingPercent}        color={COST_COLORS.packaging} />
+              <CostRow label="Embalagem"         value={result.costs.packaging}      percent={result.costs.packagingPercent}      color={COST_COLORS.packaging} />
               {inputs.marketingPercent > 0 && (
-                <CostRow label="Marketing"        value={result.costs.marketing}        percent={result.costs.marketingPercent}        color={COST_COLORS.marketing} />
+                <CostRow label="Marketing"       value={result.costs.marketing}      percent={result.costs.marketingPercent}      color={COST_COLORS.marketing} />
               )}
               {inputs.returnRate > 0 && (
-                <CostRow label="Devoluções"       value={result.costs.returnCost}       percent={result.costs.returnCostPercent}       color={COST_COLORS.returnCost} />
+                <CostRow label="Devoluções"      value={result.costs.returnCost}     percent={result.costs.returnCostPercent}     color={COST_COLORS.returnCost} />
               )}
               <div style={{ borderTop: "1px solid var(--border)", marginTop: 4, paddingTop: 12 }}>
-                <CostRow label="Lucro líquido"   value={result.costs.profit}           percent={result.costs.profitPercent}           color={COST_COLORS.profit} />
+                <CostRow label="Lucro líquido"   value={result.costs.profit}         percent={result.costs.profitPercent}         color={COST_COLORS.profit} />
               </div>
             </div>
           </div>
@@ -468,7 +439,7 @@ export default function Calculator() {
       </div>
 
       {/* ── Educational Section ── */}
-      <div style={{ borderTop: "1px solid var(--border)", maxWidth: 1100, width: "100%", margin: "0 auto", padding: "0 24px" }}>
+      <div className="edu-section" style={{ borderTop: "1px solid var(--border)" }}>
         <button
           onClick={() => setEduOpen(!eduOpen)}
           style={{
@@ -514,18 +485,15 @@ export default function Calculator() {
       </div>
 
       {/* ── Footer ── */}
-      <footer style={{
-        borderTop: "1px solid var(--border)",
-        padding: "14px 32px",
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        maxWidth: 1100, width: "100%", margin: "0 auto",
-      }}>
-        <p style={{ fontSize: 11, color: "var(--text-3)" }}>
-          Valores estimados. Consulte seu contador para decisões tributárias.
-        </p>
-        <span className="f-serif" style={{ fontSize: 14, color: "var(--text-3)", fontStyle: "italic" }}>
-          Precify
-        </span>
+      <footer style={{ borderTop: "1px solid var(--border)" }}>
+        <div className="footer-inner">
+          <p style={{ fontSize: 11, color: "var(--text-3)" }}>
+            Valores estimados. Consulte seu contador para decisões tributárias.
+          </p>
+          <span className="f-serif" style={{ fontSize: 14, color: "var(--text-3)", fontStyle: "italic" }}>
+            Precify
+          </span>
+        </div>
       </footer>
     </div>
   );
