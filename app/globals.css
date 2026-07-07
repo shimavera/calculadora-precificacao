@@ -250,3 +250,7 @@ input[type='checkbox']:checked::after {
     font-size: 56px !important;
   }
 }
+
+/* Padrão SP3/Juan: mata o swipe-to-voltar do trackpad (não sai do site ao arrastar pro lado). */
+html, body { overscroll-behavior-x: none; }
+* { overscroll-behavior-x: none; }
